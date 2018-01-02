@@ -5,6 +5,8 @@ import time
 import matplotlib.pyplot as plt
 import shutil
 
+work_path = os.getcwd()
+
 #除非特殊情况，所有参数自适应，不需要修改任何参数
 def _main():
     # 关于透视角度的参数，不要修改！
@@ -67,7 +69,7 @@ def _run(k_array, imgfile_name, tan, cos, sin, last_output_rgb, cen_loc):
             over_n += 1
             cv2.imwrite(r'temp\gameover%d.png' % over_n, last_output_rgb)
 
-            cmd = 'adb shell input tap 372 1055'
+            cmd = work_path + '/file/adb.exe shell input tap 372 1055'
             _cmd(cmd)
             i = 0
             time.sleep(3)
@@ -149,8 +151,8 @@ def _log(log_con, type_name, is_print=True):
 
 def _get_screenshot(name):
     print("开始截屏...", end="")
-    _cmd('adb shell screencap -p /sdcard/%s.png' % str(name))
-    _cmd('adb pull /sdcard/%s.png ./temp' % str(name))
+    _cmd(work_path + '/file/adb.exe shell screencap -p /sdcard/%s.png' % str(name))
+    _cmd(work_path + '/file/adb.exe pull /sdcard/%s.png ./temp' % str(name))
     print("完成!")
 
 
@@ -279,7 +281,7 @@ def _cmd(cmd_str):
 def _jump(distance, k_array):
     k = k_array._get_k(distance)
     press_time = my_int(distance * k)
-    cmd_str = 'adb shell input swipe 320 1000 320 1000 ' + str(press_time)
+    cmd_str = work_path + '/file/adb.exe shell input swipe 320 1000 320 1000 ' + str(press_time)
     _cmd(cmd_str)
 
 
