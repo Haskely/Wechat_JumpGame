@@ -89,7 +89,8 @@ def _run(k_array, imgfile_name, tan, cos, sin, last_output_rgb, cen_loc,img_chec
 
         _log("第%d次" % i, "EVENT")
 
-        _get_screenshot(imgfile_name)
+        if not _get_screenshot(imgfile_name):
+            continue
 
         img_rgb = _read_screenshot(imgfile_name)
 
@@ -214,10 +215,20 @@ def _log(log_con, type_name, is_print=True):
 
 
 def _get_screenshot(name):
-    print("开始截屏...", end="")
-    _cmd(order_start + 'shell screencap -p /sdcard/%s.png' % str(name))
-    _cmd(order_start + 'pull /sdcard/%s.png ./temp' % str(name))
-    print("完成!")
+    path = 'temp/%s.png'%name
+    if os.path.exists(path):
+        shutil.copy(path,'temp/last_%s.png'%name)
+        os.remove(path)
+
+    while True:
+        print("开始截屏...", end="")
+        _cmd(order_start + 'shell screencap -p /sdcard/%s.png' % str(name))
+        _cmd(order_start + 'pull /sdcard/%s.png ./temp' % str(name))
+        if os.path.exists(path):
+            print("完成!")
+            return True
+        else:
+            input("获取截图失败，请检查手机是否连接到电脑，并是否开启开发者模式,回车继续")
 
 
 def my_int(num):
