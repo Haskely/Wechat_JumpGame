@@ -5,6 +5,7 @@ import time
 import matplotlib.pyplot as plt
 import shutil
 import random
+import math
 
 # 自适应各种分辨率
 # 本程序应用完全不同的方法寻找关键点，稳定性非常高:测试方法：在temp文件夹里放截图screenshot.png并运行程序，看output.png的标记
@@ -45,7 +46,7 @@ def _main():
     img_rgb = _read_screenshot(imgfile_name)
     last_output_rgb = img_rgb
 
-    k_array = K_array(img_rgb, tan, cos, sin)
+    k_array = K_array(img_rgb, tan, cos, sin,k0=_get_k0())
     _log("准备完成！开始运行\n", "EVENT")
 
     img_checker = cv2.imread(r'file\checker1.jpg')
@@ -77,7 +78,7 @@ def _run(k_array, imgfile_name, tan, cos, sin, last_output_rgb, cen_loc,img_chec
     hc, wc = img_checker.shape[0:2]
 
     # 循环直到游戏失败结束
-    max_row = 1000
+    max_row = 170
     distance = 0
     i = 0
     is_on = True
@@ -85,9 +86,7 @@ def _run(k_array, imgfile_name, tan, cos, sin, last_output_rgb, cen_loc,img_chec
     over_n = 0
     while is_on:
         k_array._plot_and_save()
-        if i >= max_row:
-            is_on = False
-            break
+
         _log("第%d次" % i, "EVENT")
 
         _get_screenshot(imgfile_name)
@@ -161,8 +160,39 @@ def _run(k_array, imgfile_name, tan, cos, sin, last_output_rgb, cen_loc,img_chec
         time.sleep(sleep_duration)
         i += 1
 
-    k_array._save_np_array_data()
+        if i >= max_row and max_row != -1:
+            t = input("接近得分安全界限，分数过高可能不显示排名。是否继续? 输入\"Y\"继续50次,\"N\"停止,\"I\"永远继续")
+            while True:
+                if t in ("Y","y"):
+                    max_row += 50
+                    print("继续玩50步")
+                    is_on = True
+                    break
+                elif t in ("N","n"):
+                    is_on = False
+                    break
+                elif t in ("I","i"):
+                    max_row = -1
+                    print("警告，不限制可能有封号风险")
+                    time.sleep(3)
+                    is_on = True
+                else:
+                    print("请输入Y或N:",end=' ')
 
+    k_array._save_np_array_data()
+    print("请随便玩几下故意失败结束！")
+    input("任意键退出~")
+
+def _get_k0():
+    file_path = "K_array/k0.txt"
+    if not os.path.exists(file_path):
+        with open(file_path,"w") as f:
+            f.write("2.32")
+
+    with open(file_path,"r") as f:
+        k0 = float(f.read())
+
+    return k0
 
 def _init_log():  # 在log中加标记以便与历史纪录区分
     if not os.path.exists("log"):
@@ -216,7 +246,7 @@ def init_files(cla):  # 检查工作环境和文件存在性，如果不存在�
 
 
 class K_array:
-    def __init__(self, img_rgb, tan, cos, sin, k0=2.34, k_array_sep=5, fix_step=1,
+    def __init__(self, img_rgb, tan, cos, sin, k0=2.32, k_array_sep=5, fix_step=1,
                  k_nparray_filename=r"np_array_data.txt"):
         self.k0 = k0
         self.work_path = os.path.join(os.path.dirname(__file__), "K_array")
@@ -252,15 +282,32 @@ class K_array:
 
     def _get_np_array_data(self, k0, img, tan, cos, sin):
         # 准备k数据
-        if os.path.exists(self.k_nparray_filename):
+        np_array_data = None
+
+        if os.path.exists(self.k_nparray_filename) and os.path.exists(self.k_nparray_filename+"k0"):
             np_array_data = np.loadtxt(self.k_nparray_filename)
-        else:
+            np_k0 = float(open(self.k_nparray_filename+"k0","r").read())
+            if np_k0 != k0:
+                print("k0被修改了，重新生成np_array_data")
+                np_array_data = None
+
+        if np_array_data is None:
+            with open(self.k_nparray_filename+"k0","w") as f:
+                f.write(str(k0))
+
             fake_p = (img.shape[1] / self.k_array_sep, img.shape[1] * tan / self.k_array_sep)
             k_num = my_int(_cal_dis((0, 0), fake_p, cos, sin))
 
             np_array_data = np.array([[-1] * k_num, [-2] * k_num, [k0] * k_num])  # 极小值，极大值，当前值
-            for j in range(0, np_array_data[0].shape[0]):
-                np_array_data[2][j] += (492 - j * self.k_array_sep) / 1530
+
+            l_a = (110,400)
+
+            for j in range(my_int(l_a[0]/self.k_array_sep), my_int(l_a[1]/self.k_array_sep)):
+                np_array_data[2][j] += (348 - j * self.k_array_sep) / 583
+            for j in range(0,my_int(l_a[0]/self.k_array_sep)):
+                np_array_data[2][j] = 2.9
+            for j in range(my_int(l_a[1] / self.k_array_sep) ,np_array_data[2].shape[0]):
+                np_array_data[2][j] = 2.25
 
         return np_array_data
 
@@ -283,15 +330,18 @@ class K_array:
         else:
             self.np_array_data[1][i] = self.np_array_data[2][i]
 
+        dk1 = err_dis * self.fix_step / distance
+        dk2 = (self.np_array_data[0][i] + self.np_array_data[1][i]) / 2 - self.np_array_data[2][i]
+
         if abs(err_dis) > 10 or self.np_array_data[0][i] > self.np_array_data[1][i] or self.np_array_data[0][i] < 0:
-            self.np_array_data[2][i] += err_dis * self.fix_step / distance
+            self.np_array_data[2][i] += dk1
         else:
-            self.np_array_data[2][i] = (self.np_array_data[0][i] + self.np_array_data[1][i]) / 2
+            self.np_array_data[2][i] += min(dk1,dk2) 
 
     def _plot_and_save(self):
         plt.axis(
-            [0, self.x_d[-1], max(np.min(self.np_array_data[2]) , 0),
-             min(np.max(self.np_array_data[2]) , 3 * self.k0)])
+            [0, self.x_d[-1], max(np.min(self.np_array_data[2])-0.1 , 0),
+             min(np.max(self.np_array_data[2])+0.1 , 3 * self.np_array_data[2][my_int(348/self.k_array_sep)])])
         plt.plot(self.x_d, self.np_array_data[0] , "r.")
         plt.plot(self.x_d, self.np_array_data[1] , "b.")
         plt.plot(self.x_d, self.np_array_data[2] , "g.")

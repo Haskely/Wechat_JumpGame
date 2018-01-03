@@ -1,11 +1,11 @@
 missing module named 'win32com.gen_py' - imported by win32com, c:\users\haske\appdata\local\programs\python\python36-32\lib\site-packages\PyInstaller\loader\rthooks\pyi_rth_win32comgenpy.py
 missing module named pyimod03_importers - imported by c:\users\haske\appdata\local\programs\python\python36-32\lib\site-packages\PyInstaller\loader\rthooks\pyi_rth_pkgres.py
-missing module named 'pkg_resources.extern.pyparsing' - imported by pkg_resources._vendor.packaging.markers, pkg_resources._vendor.packaging.requirements
-missing module named StringIO - imported by numpy.lib.utils, numpy.testing.utils, numpy.lib.format, six, pkg_resources._vendor.six
 missing module named __builtin__ - imported by numpy.core.numerictypes, numpy.core.numeric, numpy.distutils.misc_util, numpy.lib.function_base, numpy.lib._iotools, numpy.ma.core, numpy, pyparsing, pkg_resources._vendor.pyparsing
 missing module named ordereddict - imported by pyparsing, pkg_resources._vendor.pyparsing
+missing module named 'pkg_resources.extern.pyparsing' - imported by pkg_resources._vendor.packaging.markers, pkg_resources._vendor.packaging.requirements
 missing module named 'com.sun' - imported by pkg_resources._vendor.appdirs
 missing module named com - imported by pkg_resources._vendor.appdirs
+missing module named StringIO - imported by numpy.lib.utils, numpy.testing.utils, numpy.lib.format, six, pkg_resources._vendor.six
 missing module named __main__ - imported by pkg_resources
 missing module named multiprocessing.SimpleQueue - imported by multiprocessing, concurrent.futures.process
 missing module named multiprocessing.set_start_method - imported by multiprocessing, multiprocessing.spawn
@@ -19,24 +19,24 @@ missing module named pkg_resources.extern.appdirs - imported by pkg_resources.ex
 missing module named 'pkg_resources.extern.six.moves' - imported by pkg_resources, pkg_resources._vendor.packaging.requirements
 missing module named pkg_resources.extern.six - imported by pkg_resources.extern, pkg_resources
 missing module named 'multiprocessing.forking' - imported by c:\users\haske\appdata\local\programs\python\python36-32\lib\site-packages\PyInstaller\loader\rthooks\pyi_rth_multiprocessing.py
-missing module named resource - imported by posix, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named posix - imported by os, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named _posixsubprocess - imported by subprocess, multiprocessing.util, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named 'org.python' - imported by pickle, setuptools.sandbox, xml.sax, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named readline - imported by cmd, code, pdb, E:\Work\CS\Python\Wechat_JumpGame\main.py
-excluded module named _frozen_importlib - imported by importlib, importlib.abc, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named _winreg - imported by platform, numpy.distutils.cpuinfo, E:\Work\CS\Python\Wechat_JumpGame\main.py, pkg_resources._vendor.appdirs
+missing module named resource - imported by posix, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named posix - imported by os, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named _posixsubprocess - imported by subprocess, multiprocessing.util, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named org - imported by pickle, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named readline - imported by cmd, code, pdb, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named _winreg - imported by platform, numpy.distutils.cpuinfo, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py, pkg_resources._vendor.appdirs
 missing module named _scproxy - imported by urllib.request
-missing module named java - imported by platform, unittest.mock, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named 'java.lang' - imported by platform, xml.sax._exceptions, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named vms_lib - imported by platform, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named termios - imported by tty, getpass, E:\Work\CS\Python\Wechat_JumpGame\main.py
+missing module named java - imported by platform, unittest.mock, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named 'java.lang' - imported by platform, xml.sax._exceptions, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named vms_lib - imported by platform, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named termios - imported by tty, getpass, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
 missing module named urllib.splittag - imported by urllib, setuptools.py26compat
-missing module named grp - imported by shutil, tarfile, pathlib, distutils.archive_util, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, pathlib, distutils.util, distutils.archive_util, netrc, getpass, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named _dummy_threading - imported by dummy_threading, E:\Work\CS\Python\Wechat_JumpGame\main.py
-missing module named org - imported by copy, E:\Work\CS\Python\Wechat_JumpGame\main.py
+missing module named grp - imported by shutil, tarfile, pathlib, distutils.archive_util, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, pathlib, distutils.util, distutils.archive_util, netrc, getpass, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named _dummy_threading - imported by dummy_threading, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
+missing module named 'org.python' - imported by copy, setuptools.sandbox, xml.sax, E:\Work\CS\Python\Wechat_JumpGame\Source_code\main.py
 missing module named six.moves.xrange - imported by six.moves, matplotlib.cbook, matplotlib.colorbar, matplotlib.hatch, matplotlib.markers, matplotlib.backend_bases, matplotlib.mlab, matplotlib.contour, matplotlib.dviread, matplotlib.tri.triinterpolate, matplotlib.backends.backend_svg, matplotlib.legend, matplotlib.offsetbox, matplotlib.axes._axes, matplotlib.stackplot, matplotlib.streamplot, matplotlib.table, matplotlib.axes._base
 runtime module named six.moves - imported by matplotlib.cbook, matplotlib.colors, cycler, 'six.moves.urllib', matplotlib, matplotlib.afm, matplotlib.colorbar, matplotlib.hatch, matplotlib.patches, matplotlib.markers, matplotlib.text, matplotlib.font_manager, matplotlib.textpath, matplotlib.backend_bases, matplotlib.widgets, matplotlib.mlab, dateutil.tz.win, dateutil.rrule, matplotlib.contour, matplotlib.collections, matplotlib.dviread, matplotlib.tri.triinterpolate, matplotlib.axes._subplots, matplotlib.gridspec, matplotlib.dates, matplotlib.backends.backend_svg, matplotlib.legend, matplotlib.offsetbox, matplotlib.legend_handler, matplotlib.axes._axes, matplotlib.stackplot, matplotlib.streamplot, matplotlib.table, matplotlib.axes._base, matplotlib.backends.backend_tkagg, matplotlib.backends.tkagg, matplotlib.backends.backend_ps
 missing module named six.moves.tkinter_filedialog - imported by six.moves, matplotlib.backends.backend_tkagg
