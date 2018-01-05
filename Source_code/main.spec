@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['E:\\Work\\CS\\Python\\Wechat_JumpGame\\Source_code'],
+             pathex=['D:\\Work\\CS\\Python\\Wechat_JumpGamet\\Source_code'],
              binaries=[],
              datas=[],
              hiddenimports=[],

@@ -5,7 +5,6 @@ import time
 import matplotlib.pyplot as plt
 import shutil
 import random
-import math
 
 # 自适应各种分辨率
 # 本程序应用完全不同的方法寻找关键点，稳定性非常高:测试方法：在temp文件夹里放截图screenshot.png并运行程序，看output.png的标记
@@ -93,21 +92,6 @@ def _run(k_array, imgfile_name, tan, cos, sin, last_output_rgb, cen_loc,img_chec
             continue
 
         img_rgb = _read_screenshot(imgfile_name)
-
-        # 如果在游戏截图中匹配到带"再玩一局"字样的模板，则循环中止
-        res_gameover = cv2.matchTemplate(img_rgb, img_gameover, cv2.TM_CCOEFF_NORMED)
-        if (cv2.minMaxLoc(res_gameover)[1] > 0.90):
-            _log("游戏结束！", "EVENT")
-            over_n += 1
-            cv2.imwrite(r'temp\gameover%d.png' % over_n, last_output_rgb)
-
-            cmd = order_start + 'shell input tap 372 1055'
-            _cmd(cmd)
-            i = 0
-            time.sleep(3)
-
-        # 模板匹配截图中小跳棋的位置
-
         checker_loc, checker_LT_loc = _find_checker_loc(img_rgb, img_checker, wc, hc, tan)
 
         if checker_loc is not None:
@@ -116,7 +100,8 @@ def _run(k_array, imgfile_name, tan, cos, sin, last_output_rgb, cen_loc,img_chec
             try_n += 1
 
             cv2.imwrite(r'temp\no_checker.png', img_rgb)
-            time.sleep(3)
+            #可能游戏结束
+            _check_gameover(over_n,img_rgb, img_gameover,last_output_rgb )
             img_checker = cv2.imread(r'file\checker%d.jpg' % (try_n % 3))
             hc, wc = img_checker.shape[0:2]
             if try_n >= 6:
@@ -177,6 +162,7 @@ def _run(k_array, imgfile_name, tan, cos, sin, last_output_rgb, cen_loc,img_chec
                     print("警告，不限制可能有封号风险")
                     time.sleep(3)
                     is_on = True
+                    break
                 else:
                     print("请输入Y或N:",end=' ')
 
@@ -313,12 +299,13 @@ class K_array:
 
             l_a = (110,400)
 
-            for j in range(my_int(l_a[0]/self.k_array_sep), my_int(l_a[1]/self.k_array_sep)):
+            mid_range = (my_int(l_a[0]/self.k_array_sep), my_int(l_a[1]/self.k_array_sep))
+            for j in range(mid_range[0],mid_range[1]):
                 np_array_data[2][j] += (348 - j * self.k_array_sep) / 583
-            for j in range(0,my_int(l_a[0]/self.k_array_sep)):
-                np_array_data[2][j] = 2.9
-            for j in range(my_int(l_a[1] / self.k_array_sep) ,np_array_data[2].shape[0]):
-                np_array_data[2][j] = 2.25
+            for j in range(0,mid_range[0]):
+                np_array_data[2][j] = np_array_data[2][mid_range[0]]
+            for j in range(mid_range[1] ,np_array_data[2].shape[0]):
+                np_array_data[2][j] = np_array_data[2][mid_range[1]-1]
 
         return np_array_data
 
@@ -370,7 +357,9 @@ def _cmd(cmd_str):
 def _jump(distance, k_array):
     k = k_array._get_k(distance)
     press_time = my_int(distance * k)
-    cmd_str = order_start + 'shell input swipe 320 1000 320 1000 ' + str(press_time)
+
+    tap_point = (400+random.randint(-100,100),1000+random.randint(-100,100),400+random.randint(-100,100),1000+random.randint(-100,100))
+    cmd_str = order_start + 'shell input swipe %d %d %d %d '%tap_point + str(press_time)
     _cmd(cmd_str)
 
 
@@ -397,6 +386,23 @@ def _find_checker_loc(img_rgb, img_checker, wc, hc, tan):
         _log("没有探测到小跳棋！匹配度为%f" % max_val1, "ERROR")
         return None, None
 
+def _check_gameover(over_n,img_rgb, img_gameover,last_output_rgb ):
+    # 如果在游戏截图中匹配到带"再玩一局"字样的模板，则循环中止
+    res_gameover = cv2.matchTemplate(img_rgb, img_gameover, cv2.TM_CCOEFF_NORMED)
+    min_valg, max_valg, min_locg, gameover_LT_loc = cv2.minMaxLoc(res_gameover)
+    if (max_valg > 0.90):
+        _log("游戏结束！", "EVENT")
+        over_n += 1
+        cv2.imwrite(r'temp\gameover%d.png' % over_n, last_output_rgb)
+        gameover_loc = (my_int(gameover_LT_loc[0] + img_gameover.shape[1] / 2),
+                        my_int(gameover_LT_loc[1] + img_gameover.shape[0] / 2))
+    else:
+        gameover_loc = (360,1050)
+    tap_point = (gameover_loc[0] + random.randint(-30, 30), gameover_loc[1] + random.randint(-30, 30))
+    cmd = order_start + 'shell input tap %d %d' % tap_point
+    _cmd(cmd)
+    i = 0
+    time.sleep(3)
 
 def _get_target_loc(img_rgb, checker_loc, checker_LT_loc, cen_loc, tan, cos, sin, c_sen = 5,search_begin_row=400):
     top_y = None
