@@ -1,6 +1,7 @@
 # Wechat_JumpGame
-Wechat_JumpGame
+
 自己写的一个微信跳一跳自动游戏程序。
+最新测试破3万无压力。
 
 * 绕过最新反作弊验证。
 
@@ -20,6 +21,7 @@ Wechat_JumpGame
 
 如果一开始效果不好，
 请适当调整K_array文件夹下的k0.txt里的数字（全局初始系数），直到第一次跳准【第一次跳的远就适当减小数字，跳得近就适当增加数字】(它可以继续不断自动微调)
+![参数调整图](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/fig.png)
 
 --------------------------
 源代码在Source_Code文件夹里
@@ -27,3 +29,9 @@ Wechat_JumpGame
 第一次运行请先运行require.bat
 
 编译exe请运行buildexe.bat
+
+![Image text](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/screenshot.png)
+![Image text](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/output.png)
+![Image text](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/last_screenshot2.png)
+![Image text](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/last_screenshot3.png)
+![Image text](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/last_screenshot4.png)
