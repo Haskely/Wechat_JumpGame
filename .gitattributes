@@ -15,3 +15,8 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+
+*.png linguist-language=python
+*.txt linguist-language=python
+*.exe linguist-language=python
