@@ -24,11 +24,11 @@
 ![参数调整图](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/fig.png)
 
 --------------------------
-源代码在Source_Code文件夹里
+如果想要研究代码，源代码在Source_Code文件夹里
 
-第一次运行请先运行require.bat
+运行代码需要配置python环境并运行require.bat以安装相应库依赖
 
-编译exe请运行buildexe.bat
+从代码编译exe请运行buildexe.bat，编译出来的文件保存在Source_Code/dist文件夹内
 
 ![Image text](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/screenshot.png)
 ![Image text](https://github.com/Haskely/Wechat_JumpGame/raw/master/readme_pic/output.png)
