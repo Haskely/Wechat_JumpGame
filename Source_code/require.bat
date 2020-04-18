@@ -1,1 +1,1 @@
-pip install numpy opencv-python matplotlib
+pip install numpy opencv-python==3.4.9.33 matplotlib
